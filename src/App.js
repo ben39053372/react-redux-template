@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import Actions from './redux/actions/ActionsIndex';
 
-function App() {
+const App = () => {
+  const [listName, setListName] = useState('')
+  const todoList = useSelector(state => state.listReducers.list)
+
+  const dispatch = useDispatch();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      input: <input value={listName} onChange={(e) => setListName(e.target.value)}></input>
+      <button type="button" onClick={() => dispatch(Actions.listActions.add_item({
+        item: {
+          name: listName,
+          data: 'data_' + listName
+        }
+      }))}>ADD</button>
+      {JSON.stringify(todoList)}
+      <ul>
+        {todoList.map(item => <li key={item.name}>{item.name}_{item.data}</li>)}
+      </ul>
     </div>
   );
 }
