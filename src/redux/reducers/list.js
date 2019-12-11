@@ -1,4 +1,4 @@
-
+// define Action Type
 const ADD_ITEM = 'ADD_ITEM';
 
 const initState = {
